@@ -6,25 +6,23 @@
 
 // @lc code=start
 func searchInsert(nums []int, target int) int {
-	first, last := 0, len(nums)-1
+	left, right := 0, len(nums)-1
+	ans := len(nums)
 
-	for first < last {
-		mid := (first + last) / 2
-		if target == nums[mid] {
-			return mid
-		} else if target < nums[mid] {
-			last = mid - 1
+	for left <= right {
+		mid := (left + right) / 2
+		if target <= nums[mid] {
+			ans = mid
+			right = mid - 1
 		} else {
-			first = mid + 1
+			left = mid + 1
 		}
 	}
 
-	if target > nums[first] {
-		return first + 1
-	} else {
-		return first
-	}
+	return ans
 }
+
+// 二分法
 
 // 时间复杂度：O(logn)
 // 空间复杂度：O(1)
