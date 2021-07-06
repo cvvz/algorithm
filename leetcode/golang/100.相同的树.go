@@ -21,7 +21,8 @@ func isSameTree(p *TreeNode, q *TreeNode) bool {
 	}
 
 	return false
-
 }
+
+// 深度优先搜索
 // @lc code=end
 

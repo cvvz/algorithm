@@ -22,7 +22,7 @@ func generate(numRows int) [][]int {
 	return ans
 }
 
-// golang 二维切片
+// golang 二维切片的用法，i为行，j为列
 // 时间复杂度：O(n2)
 // 空间复杂度：O(1)
 // @lc code=end

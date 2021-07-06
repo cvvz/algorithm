@@ -17,7 +17,7 @@ func merge(nums1 []int, m int, nums2 []int, n int)  {
 			i--
 			continue
 		} 
-		
+
 		if nums1[i] < nums2[j] {
 			nums1[k] = nums2[j]
 			j--
@@ -30,6 +30,7 @@ func merge(nums1 []int, m int, nums2 []int, n int)  {
 
 
 // 逆向双指针
-//
+// 时间复杂度：O(m+n)
+// 空间复杂度：O(1)
 // @lc code=end
 
