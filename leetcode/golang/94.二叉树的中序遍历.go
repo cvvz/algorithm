@@ -14,38 +14,22 @@
  * }
  */
 func inorderTraversal(root *TreeNode) []int {
-	if root == nil {
-		return nil
-	}
-	
-	stack := []*TreeNode{root}
 	ans := []int{}
-
-	for len(stack) != 0 {
-		top := stack[len(stack)-1]
-
-		if top.Left != nil {
-			stack = append(stack, top.Left)
-			top.Left = nil
-		} else {
-			ans = append(ans, top.Val)
-			stack = stack[:len(stack)-1]
-			if top.Right != nil {
-				stack = append(stack, top.Right)
-				top.Right = nil
-			}
-		}
+	if root == nil {
+		return ans
 	}
+
+	ans = append(ans, inorderTraversal(root.Left)...)
+	ans = append(ans, root.Val)
+	ans = append(ans, inorderTraversal(root.Right)...)
 
 	return ans
 }
 
-// 递归(递归怎么写代码量最少？)
-// 时间复杂度：
-// 空间复杂度：
+// 中序遍历-迭代法用栈怎么做?
 
-// 迭代：
-// 时间复杂度：
-// 空间复杂度：
+//🌟 二叉查找树用中序遍历能得到顺序数组
+// 时间复杂度：O(n)
+// 空间复杂度：O(n)
 // @lc code=end
 
