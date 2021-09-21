@@ -6,25 +6,45 @@
 
 // @lc code=start
 func findKthLargest(nums []int, k int) int {
-	// 快速排序
-
+	// 堆排序
+	// 先利用前k个元素建小顶堆
+	minHeap := nums[:k]
+	buildMinHeap(minHeap)
+	// 如果比堆顶大，那么就替换堆顶元素，然后进行一次堆化
+	for i := k; i < len(nums); i++ {
+		if nums[i] > nums[0] {
+			nums[0] = nums[i]
+			minHeapify(minHeap, 0)
+		}
+	}
+	// 返回堆顶元素
+	return nums[0]
 }
 
-// 冒泡排序
-// func findKthLargest(nums []int, k int) int {
-// 	for i := 0; i < len(nums); i++ {
-// 		for j := 0; j < len(nums)-i-1; j++ {
-// 			if nums[j] > nums[j+1] {
-// 				nums[j+1], nums[j] = nums[j], nums[j+1]
-// 			}
-// 		}
-// 		if i == k-1 {
-// 			return nums[len(nums)-1-i]
-// 		}
-// 	}
+// 建堆
+func buildMinHeap(nums []int) {
+	for i := len(nums)/2 - 1; i >= 0; i-- {
+		minHeapify(nums, i)
+	}
+}
 
-// 	return 0
-// }
+// 🌟🌟堆化
+func minHeapify(nums []int, i int) {
+	l := i*2 + 1
+	r := i*2 + 2
+	min := i
+
+	if l < len(nums) && nums[l] < nums[min] {
+		min = l
+	}
+	if r < len(nums) && nums[r] < nums[min] {
+		min = r
+	}
+	if min != i {
+		nums[i], nums[min] = nums[min], nums[i]
+		minHeapify(nums, min)
+	}
+}
 
 // @lc code=end
 
