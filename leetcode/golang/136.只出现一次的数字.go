@@ -8,5 +8,7 @@
 func singleNumber(nums []int) int {
 
 }
+
+// 数学题，略
 // @lc code=end
 

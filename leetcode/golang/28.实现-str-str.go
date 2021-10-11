@@ -9,9 +9,7 @@ func strStr(haystack string, needle string) int {
 
 }
 
-// KMP算法，orz
+// KMP算法
 
-// 时间复杂度：
-// 空间复杂度：
 // @lc code=end
 
