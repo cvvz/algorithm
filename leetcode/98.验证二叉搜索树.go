@@ -15,31 +15,50 @@
  */
 
 func isValidBST(root *TreeNode) bool {
-	bstArr := inorderTraversal(root)
-
-	for i := 1; i < len(bstArr); i++ {
-		if bstArr[i] <= bstArr[i-1] {
+	result := inorderTraversal(root)
+	n := len(result)
+	for i := 1; i < n; i++ {
+		if result[i] <= result[i-1] {
 			return false
 		}
 	}
+
 	return true
 }
 
 func inorderTraversal(root *TreeNode) []int {
 	ans := []int{}
-	var foo func(*TreeNode)
 
-	foo = func(root *TreeNode) {
-		if root == nil {
-			return
+	stack := new(nodeStack)
+
+	for root != nil || !stack.IsEmpty() {
+		for root != nil {
+			stack.Push(root)
+			root = root.Left
 		}
-		foo(root.Left)
-		ans = append(ans, root.Val)
-		foo(root.Right)
+
+		top := stack.Pop()
+		ans = append(ans, top.Val)
+		root = top.Right
 	}
 
-	foo(root)
 	return ans
+}
+
+type nodeStack []*TreeNode
+
+func (s *nodeStack) Push(node *TreeNode) {
+	*s = append(*s, node)
+}
+
+func (s *nodeStack) Pop() *TreeNode {
+	top := (*s)[len(*s)-1]
+	*s = (*s)[:len(*s)-1]
+	return top
+}
+
+func (s *nodeStack) IsEmpty() bool {
+	return len(*s) == 0
 }
 
 // 中序遍历一个二叉搜索树能得到一个从小到大排列的数组

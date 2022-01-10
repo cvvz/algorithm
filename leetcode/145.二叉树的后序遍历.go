@@ -14,15 +14,27 @@
  * }
  */
 func postorderTraversal(root *TreeNode) []int {
-	if root == nil {
-		return nil
-	}
-	ans := []int{}
-	ans = append(ans, postorderTraversal(root.Left)...)
-	ans = append(ans, postorderTraversal(root.Right)...)
-	ans = append(ans, root.Val)
-	return ans
+
 }
+
+type nodeStack []*TreeNode
+
+func (s *nodeStack) Push(node *TreeNode) {
+	*s = append(*s, node)
+}
+
+func (s *nodeStack) Pop() *TreeNode {
+	top := (*s)[len(*s)-1]
+	*s = (*s)[:len(*s)-1]
+	return top
+}
+
+func (s *nodeStack) IsEmpty() bool {
+	return len(*s) == 0
+}
+
+// 如果当前节点不为空，从当前节点出发沿着左子树遍历
+// 右子树变为当前节点
 
 // @lc code=end
 

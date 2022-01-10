@@ -17,27 +17,26 @@ func isSymmetric(root *TreeNode) bool {
 	if root == nil {
 		return true
 	}
-	
-	var twoTreeSymmetric func(left *TreeNode, right *TreeNode) bool
 
-	twoTreeSymmetric = func(t1 *TreeNode, t2 *TreeNode) bool {
-		if t1 == nil && t2 == nil {
-			return true
-		} 
+	return symmetric(root.Left, root.Right)
+}
 
-		if t1 != nil && t2 != nil && t1.Val == t2.Val && twoTreeSymmetric(t1.Left, t2.Right) && twoTreeSymmetric(t1.Right, t2.Left) {
-			return true
-		}
+func symmetric(tree1 *TreeNode, tree2 *TreeNode) bool {
+	if tree1 == nil && tree2 == nil {
+		return true
+	}
 
+	if tree1 != nil && tree2 == nil || tree2 != nil && tree1 == nil {
 		return false
 	}
 
-	return twoTreeSymmetric(root.Left, root.Right)
+	if tree1.Val != tree2.Val {
+		return false
+	}
+
+	return symmetric(tree1.Left, tree2.Right) && symmetric(tree2.Left, tree1.Right)
 }
 
-
-// 两棵数怎样才算是镜像对称：
-// 根节点相同
-// 左子树与右子树镜像对称
+// 两颗树对称，意味着根节点相同，左子树和右子树是对称的
 // @lc code=end
 

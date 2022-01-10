@@ -14,55 +14,41 @@
  * }
  */
 func inorderTraversal(root *TreeNode) []int {
-	var ans []int
-	var s stack
+	stack := new(nodeStack)
+	ans := []int{}
 
-	if root == nil {
-		return ans
-	}
-
-	s.push(root)
-
-	for !s.empty() {
-		node := s.top()
-		if node.Left != nil {
-			s.push(node.Left)
-			node.Left = nil
-		} else {
-			_ = s.pop()
-			ans = append(ans, node.Val)
-			if node.Right != nil {
-				s.push(node.Right)
-				node.Right = nil
-			}
+	for root != nil || !stack.IsEmpty() {
+		for root != nil {
+			stack.Push(root)
+			root = root.Left
 		}
+
+		top := stack.Pop()
+		ans = append(ans, top.Val)
+		root = top.Right
 	}
 
 	return ans
 }
 
-type stack []*TreeNode
+type nodeStack []*TreeNode
 
-func (s *stack) push(node *TreeNode) {
+func (s *nodeStack) Push(node *TreeNode) {
 	*s = append(*s, node)
 }
 
-func (s *stack) pop() *TreeNode {
-	top := s.top()
+func (s *nodeStack) Pop() *TreeNode {
+	top := (*s)[len(*s)-1]
 	*s = (*s)[:len(*s)-1]
 	return top
 }
 
-func (s *stack) top() *TreeNode {
-	return (*s)[len(*s)-1]
-}
-
-func (s *stack) empty() bool {
+func (s *nodeStack) IsEmpty() bool {
 	return len(*s) == 0
 }
 
-//🌟 二叉查找树用中序遍历能得到顺序数组
-// 时间复杂度：O(n)
-// 空间复杂度：O(n)
+// 沿着左子树一直遍历，如果当前节点不为空，入栈
+// 出栈，右子树作为当前节点
+
 // @lc code=end
 

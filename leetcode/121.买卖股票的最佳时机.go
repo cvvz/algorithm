@@ -6,26 +6,18 @@
 
 // @lc code=start
 func maxProfit(prices []int) int {
-	benefit := 0
-	if len(prices) == 0 {
-		return benefit
-	}
-
-	minPrice := prices[0]
-
-	for i:=1;i<len(prices);i++ {
-		if prices[i] - minPrice > benefit {
-			benefit = prices[i] - minPrice
+	benefit, lowestPrice := 0, prices[0]
+	for i := 1; i < len(prices); i++ {
+		if prices[i]-lowestPrice > benefit {
+			benefit = prices[i] - lowestPrice
 		}
-
-		if prices[i] < minPrice {
-			minPrice = prices[i]
+		if prices[i] < lowestPrice {
+			lowestPrice = prices[i]
 		}
 	}
 
 	return benefit
 }
 
-// 只用遍历一遍的方法：假设第n天卖，只要找出之前最小值即可
 // @lc code=end
 
