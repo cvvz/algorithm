@@ -5,98 +5,85 @@
  */
 
 // @lc code=start
+
 func numIslands(grid [][]byte) int {
-	num := 0
-	row := len(grid)
-	column := len(grid[0])
+	row, column := len(grid), len(grid[0])
+	count := 0
+	q := &pointQ{}
 
 	for i := 0; i < row; i++ {
 		for j := 0; j < column; j++ {
-			// 🌟'0'不是0 ！！！
-			if grid[i][j] != '0' {
+			if grid[i][j] == '1' {
+				count++
 				// DFS(grid, i, j)
-				BFS(grid, i, j)
-				num++
+				// BFS
+				func() {
+					grid[i][j] = '0'
+					q.push(&point{i, j})
+
+					for !q.empty() {
+						pos := q.pop()
+						r, c := pos.i, pos.j
+						if r-1 >= 0 && grid[r-1][c] == '1' {
+							grid[r-1][c] = '0'
+							q.push(&point{r - 1, c})
+						}
+						if r+1 < row && grid[r+1][c] == '1' {
+							grid[r+1][c] = '0'
+							q.push(&point{r + 1, c})
+						}
+						if c-1 >= 0 && grid[r][c-1] == '1' {
+							grid[r][c-1] = '0'
+							q.push(&point{r, c - 1})
+						}
+						if c+1 < column && grid[r][c+1] == '1' {
+							grid[r][c+1] = '0'
+							q.push(&point{r, c + 1})
+						}
+					}
+				}()
 			}
 		}
 	}
 
-	return num
+	return count
 }
 
-// 🌟深度搜索：栈 或者 **递归** 都可以，递归写起来简单
-func DFS(grid [][]byte, i, j int) {
-	row := len(grid)
-	column := len(grid[0])
-
-	if i < 0 || i >= row || j < 0 || j >= column {
-		return
-	}
-	if grid[i][j] == '0' {
-		return
-	}
-
-	grid[i][j] = '0'
-	DFS(grid, i-1, j)
-	DFS(grid, i+1, j)
-	DFS(grid, i, j-1)
-	DFS(grid, i, j+1)
+type point struct {
+	i, j int
 }
 
-/////////////////////////
+type pointQ []*point
 
-// 🌟广度搜索：队列
-type pos struct {
-	i int
-	j int
+func (q *pointQ) push(p *point) {
+	*q = append(*q, p)
 }
 
-type queue []pos
-
-func (q *queue) push(i, j int) {
-	*q = append(*q, pos{
-		i: i,
-		j: j,
-	})
-}
-
-func (q *queue) pop() pos {
+func (q *pointQ) pop() *point {
 	top := (*q)[0]
 	*q = (*q)[1:]
 	return top
 }
 
-func (q *queue) empty() bool {
+func (q *pointQ) empty() bool {
 	return len(*q) == 0
 }
 
-func BFS(grid [][]byte, i, j int) {
-	row := len(grid)
-	column := len(grid[0])
-
-	q := new(queue)
+func DFS(grid [][]byte, i, j int) {
 	grid[i][j] = '0'
-	q.push(i, j)
 
-	for !q.empty() {
-		current := q.pop()
-
-		if current.i-1 >= 0 && grid[current.i-1][current.j] != '0' {
-			grid[current.i-1][current.j] = '0'
-			q.push(current.i-1, current.j)
-		}
-		if current.i+1 < row && grid[current.i+1][current.j] != '0' {
-			grid[current.i+1][current.j] = '0'
-			q.push(current.i+1, current.j)
-		}
-		if current.j-1 >= 0 && grid[current.i][current.j-1] != '0' {
-			grid[current.i][current.j-1] = '0'
-			q.push(current.i, current.j-1)
-		}
-		if current.j+1 < column && grid[current.i][current.j+1] != '0' {
-			grid[current.i][current.j+1] = '0'
-			q.push(current.i, current.j+1)
-		}
+	row, column := len(grid), len(grid[0])
+	if i+1 < row && grid[i+1][j] == '1' {
+		DFS(grid, i+1, j)
+	}
+	if i-1 >= 0 && grid[i-1][j] == '1' {
+		DFS(grid, i-1, j)
+	}
+	if j+1 < column && grid[i][j+1] == '1' {
+		DFS(grid, i, j+1)
+	}
+	if j-1 >= 0 && grid[i][j-1] == '1' {
+		DFS(grid, i, j-1)
 	}
 }
 

@@ -6,15 +6,81 @@
 
 // @lc code=start
 
-// 方法三：自建堆
-// func findKthLargest(nums []int, k int) int {
+// 方法三：自建小顶堆
+func findKthLargest(nums []int, k int) int {
+	n := len(nums)
+	h := &myheap{}
 
-// }
+	i := 0
+
+	for i < k && i < n {
+		h.push(nums[i])
+		i++
+	}
+
+	for i < n {
+		if nums[i] > (*h)[0] {
+			h.push(nums[i])
+			h.pop()
+		}
+		i++
+	}
+
+	return (*h)[0]
+}
+
+type myheap []int
+
+func (h *myheap) push(val int) {
+	*h = append(*h, val)
+	up(*h, len(*h)-1)
+}
+
+func (h *myheap) pop() {
+	(*h)[0], (*h)[len(*h)-1] = (*h)[len(*h)-1], (*h)[0]
+	*h = (*h)[:len(*h)-1]
+	down(*h, 0)
+}
+
+func up(h myheap, i int) {
+	for i > 0 {
+		//🌟 这里不需要判断是否比兄弟节点小
+		parent := (i - 1) >> 1
+
+		if i == parent || h[i] >= h[parent] {
+			break
+		}
+
+		h[i], h[parent] = h[parent], h[i]
+		i = parent
+	}
+}
+
+func down(h myheap, i int) {
+	for i < len(h) {
+		left, right := i<<1+1, i<<1+2
+		if left > len(h)-1 {
+			return
+		}
+
+		toSwap := left
+		if right <= len(h)-1 && h[left] > h[right] {
+			toSwap = right
+		}
+
+		if h[toSwap] < h[i] {
+			h[toSwap], h[i] = h[i], h[toSwap]
+		}
+
+		i = toSwap
+	}
+
+}
 
 // 方法二： 快速选择算法
-func findKthLargest(nums []int, k int) int {
-	return quickSelect(nums, 0, len(nums)-1, k)
-}
+// func findKthLargest(nums []int, k int) int {
+// 	return quickSelect(nums, 0, len(nums)-1, k)
+// }
 
 func quickSelect(nums []int, start, end, k int) int {
 	pivot := partition(nums, start, end)
