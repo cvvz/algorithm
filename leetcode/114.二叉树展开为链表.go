@@ -14,7 +14,29 @@
  * }
  */
 func flatten(root *TreeNode) {
+	preOrderTraversal(root)
+}
 
+func preOrderTraversal(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	right := root.Right
+
+	root.Right = root.Left
+
+	preOrderTraversal(root.Left)
+
+	root.Left = nil
+
+	for root.Right != nil {
+		root = root.Right
+	}
+
+	root.Right = right
+
+	preOrderTraversal(root.Right)
 }
 
 // @lc code=end

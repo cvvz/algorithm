@@ -6,6 +6,7 @@
 
 // @lc code=start
 func maxProfit(prices []int) int {
+	// 贪心
 	benefit := 0
 	for i := 1; i < len(prices); i++ {
 		if prices[i]-prices[i-1] > 0 {
@@ -16,6 +17,5 @@ func maxProfit(prices []int) int {
 	return benefit
 }
 
-// 贪心
 // @lc code=end
 

@@ -5,8 +5,9 @@
  */
 
 // @lc code=start
-func setZeroes(matrix [][]int)  {
+func setZeroes(matrix [][]int) {
 
 }
+
 // @lc code=end
 
