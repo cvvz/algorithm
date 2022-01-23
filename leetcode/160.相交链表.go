@@ -13,20 +13,35 @@
  * }
  */
 func getIntersectionNode(headA, headB *ListNode) *ListNode {
-	set := make(map[*ListNode]struct{})
-
-	for p := headA; p != nil; p = p.Next {
-		set[p] = struct{}{}
+	// 获得链表长度
+	lengthA, lengthB := 0, 0
+	ha, hb := headA, headB
+	for ha != nil {
+		ha = ha.Next
+		lengthA++
 	}
 
-	for p := headB; p != nil; p = p.Next {
-		if _, exist := set[p]; exist {
-			return p
+	for hb != nil {
+		hb = hb.Next
+		lengthB++
+	}
+	// 移动长链表的头和短链表对齐
+	if lengthA > lengthB {
+		for i := 0; lengthB+i < lengthA; i++ {
+			headA = headA.Next
+		}
+	} else {
+		for i := 0; lengthA+i < lengthB; i++ {
+			headB = headB.Next
 		}
 	}
+	// 同时移动直到链表尾，判断是否相同
+	for headA != headB {
+		headA = headA.Next
+		headB = headB.Next
+	}
 
-	return nil
-
+	return headA
 }
 
 // @lc code=end
