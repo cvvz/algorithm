@@ -15,11 +15,12 @@ func threeSumClosest(nums []int, target int) int {
 		return x
 	}
 
-	var ans = nums[0] + nums[1] + nums[2]
+	ans := nums[0] + nums[1] + nums[2]
+
 	for i, num1 := range nums {
-		j, k := i+1, len(nums)-1
-		for j < k {
-			num2, num3 := nums[j], nums[k]
+		start, end := i+1, len(nums)-1
+		for start < end {
+			num2, num3 := nums[start], nums[end]
 			sum := num1 + num2 + num3
 			if target-sum == 0 {
 				return sum
@@ -29,17 +30,17 @@ func threeSumClosest(nums []int, target int) int {
 			}
 			// 移动
 			if target < sum {
-				for k-1 >= 0 && nums[k] == nums[k-1] {
-					k--
+				for end-1 >= 0 && nums[end] == nums[end-1] {
+					end--
 				}
-				k--
+				end--
 				continue
 			}
 
-			for j+1 < len(nums) && nums[j] == nums[j+1] {
-				j++
+			for start+1 < len(nums) && nums[start] == nums[start+1] {
+				start++
 			}
-			j++
+			start++
 		}
 	}
 

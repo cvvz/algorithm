@@ -12,7 +12,7 @@ func longestPalindrome(s string) string {
 		dp[i][i] = true
 	}
 	maxLen := 1
-	ans := s[0:1]
+	ans := s[:1]
 
 	// 字符串长度
 	for l := 2; l <= len(s); l++ {

@@ -1,10 +1,14 @@
 # algorithm
 
-## leetcode
+## 我的leetcode
 
 [https://leetcode-cn.com/u/cvz](https://leetcode-cn.com/u/cvz/)
 
-## 分类
+## golang并发
+
+[concurrent](concurrent)
+
+## 数据结构和算法
 
 ### 数组
 
@@ -21,6 +25,17 @@
 - [x] 二分查找
 - [x] 字符串
 
+### 链表
+
+- [x] container/list
+- [x] 哨兵头dummyHead，哨兵尾dummyTail
+- [x] 实现一个链表
+
+### 哈希表
+
+- [x] 实现一个哈希表
+- [x] 链表 + map结合：LRU缓存等
+
 ### 二叉树
 
 - [x] BFS（层序level遍历） —— 队列
@@ -33,16 +48,6 @@
 - [x] 快速排序
 - [x] 堆排序
 - [x] 快速选择算法解决TopK
-
-### 链表
-
-- [x] container/list
-- [x] 哨兵头dummyHead，哨兵尾dummyTail
-
-### 哈希表
-
-- [x] 实现一个哈希表
-- [x] 链表 + map结合：LRU缓存等
 
 ### 堆
 
