@@ -13,7 +13,45 @@
  * }
  */
 func mergeKLists(lists []*ListNode) *ListNode {
+	if len(lists) == 0 {
+		return nil
+	}
 
+	dummyHead := &ListNode{}
+	tail := dummyHead
+
+	for {
+		headList := []*ListNode{}
+		for _, head := range lists {
+			headList = append(headList, head)
+		}
+
+		i := func() int {
+			index := 0
+			min := 100000
+
+			for i, head := range headList {
+				if head != nil && head.Val < min {
+					index = i
+					min = head.Val
+				}
+			}
+
+			return index
+		}()
+
+		if lists[i] == nil {
+			break
+		}
+
+		tail.Next = lists[i]
+		tail = tail.Next
+
+		lists[i] = lists[i].Next
+	}
+
+	return dummyHead.Next
 }
+
 // @lc code=end
 
